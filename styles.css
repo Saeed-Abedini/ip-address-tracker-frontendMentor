@@ -192,6 +192,7 @@ body::-webkit-scrollbar {
   }
   .data-section > hr {
     height: 100%;
+    width: 0;
   }
   .data-section p {
     font-size: 1.5rem;
