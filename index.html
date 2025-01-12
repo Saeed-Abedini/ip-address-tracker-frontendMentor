@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+    <title>Frontend Mentor | IP Address Tracker</title>
+  </head>
+  <body>
+    <main class="main-container">
+      <!-- Header section -->
+      <section class="header-section">
+        <h1>IP Address Tracker</h1>
+        <form method="get" class="search-form">
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Search for any IP address or domain (e.g., google.com)"
+            required
+          />
+          <button type="submit" class="submit-btn">
+            <i class="fa-solid fa-spinner" style="display: none"></i>
+            <i class="fa-solid fa-angle-right"></i>
+          </button>
+        </form>
+      </section>
+
+      <!-- Data section -->
+      <section class="data-section">
+        <article>
+          <h2>IP ADDRESS</h2>
+          <p id="ipAddress"></p>
+        </article>
+        <hr />
+        <article>
+          <div class="location-title">
+            <h2>LOCATION</h2>
+          </div>
+          <p id="location"></p>
+        </article>
+        <hr />
+        <article>
+          <h2>TIME ZONE</h2>
+          <p id="timezone"></p>
+        </article>
+        <hr />
+        <article>
+          <h2>ISP</h2>
+          <p id="isp"></p>
+        </article>
+      </section>
+
+      <!-- Map section -->
+      <section class="map-section">
+        <div id="map"></div>
+      </section>
+    </main>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
