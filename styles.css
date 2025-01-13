@@ -128,13 +128,19 @@ body::-webkit-scrollbar {
   flex-direction: column;
   gap: 0.5rem;
   color: var(--very-dark-gray);
+  overflow: hidden;
+  white-space: wrap;
 }
 .data-section article :first-child {
   display: inline;
   color: var(--dark-gray);
   font-size: 0.7rem;
   font-weight: 800;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
+
 #countryFlag {
   vertical-align: middle;
   margin-left: 0.5rem;

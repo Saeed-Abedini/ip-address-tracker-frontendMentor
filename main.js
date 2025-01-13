@@ -104,11 +104,12 @@ searchForm.addEventListener("submit", (e) => {
     getUserData(input);
   } else {
     // Convert domain to IP address
-    fetch(`http://ip-api.com/json/${input}`)
+    fetch(
+      `https://api.ipapi.com/${input}?access_key=f2cf7b921bf0555065bf5212b37a5da1`
+    )
       .then((response) => response.json())
       .then((data) => {
-        const ip = data.query;
-        getUserData(ip);
+        getUserData(data.ip);
       })
       .catch((error) => {
         console.error("Error:", error);
