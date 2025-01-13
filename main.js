@@ -1,10 +1,10 @@
 const searchForm = document.querySelector(".search-form");
 const submitBtn = document.querySelector(".submit-btn");
-const ipAddress = document.getElementById("ipAddress");
-const countryLocation = document.getElementById("location");
-const timezone = document.getElementById("timezone");
-const isp = document.getElementById("isp");
 const locationTitle = document.querySelector(".location-title");
+const ipAddress = document.querySelector("#ipAddress");
+const countryLocation = document.querySelector("#location");
+const timezone = document.querySelector("#timezone");
+const isp = document.querySelector("#isp");
 
 let map, marker;
 const customIcon = L.icon({
@@ -26,36 +26,37 @@ const setLoadingState = (isLoading) => {
 
 const updateLocationInfo = ({
   ip,
-  country,
+  country_name,
   city,
-  timezone_gmt,
-  org,
+  time_zone,
+  isp: ispData,
   country_flag,
   latitude,
   longitude,
 }) => {
   ipAddress.textContent = ip || "-";
-  countryLocation.textContent = `${country || "-"}, ${city || "-"}`;
-  timezone.textContent = timezone_gmt || "-";
-  isp.textContent = org || "-";
+  countryLocation.textContent = `${country_name || "-"}, ${city || "-"}`;
+  timezone.textContent = "UTC " + time_zone.offset || "-";
+  isp.textContent = ispData || "-";
 
   const existingFlag = document.getElementById("countryFlag");
   if (existingFlag) existingFlag.remove();
   if (country_flag) {
     const img = document.createElement("img");
     img.id = "countryFlag";
+    img.alt = "Country flag";
     img.src = country_flag;
     locationTitle.appendChild(img);
   }
 
   if (!map) {
-    map = L.map("map").setView([latitude, longitude], 15);
+    map = L.map("map").setView([latitude, longitude], 16);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
   } else {
-    map.setView([latitude, longitude], 15);
+    map.setView([latitude, longitude], 16);
   }
 
   if (marker) marker.remove();
@@ -65,24 +66,52 @@ const updateLocationInfo = ({
 const getUserData = async (customIp = "") => {
   setLoadingState(true);
   try {
-    const response = await fetch(`https://ipwhois.app/json/${customIp}`);
-    const location = await response.json();
-
-    if (location.success) {
-      updateLocationInfo(location);
-    } else if (customIp.trim()) {
-      alert(location.message); // Show alert only if a custom IP was provided
+    const response = await fetch(
+      `https://api.ipgeolocation.io/ipgeo?apiKey=977cd59e01f145e08c675be02182de98&ip=${customIp}`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
     }
+    const location = await response.json();
+    updateLocationInfo(location);
   } catch (error) {
     console.error("Error fetching location:", error);
+    alert(
+      "Error fetching data or the IP address entered is incorrect. Please check and try again."
+    );
   } finally {
     setLoadingState(false);
   }
 };
 
-document.addEventListener("DOMContentLoaded", () => getUserData());
+document.addEventListener("DOMContentLoaded", () => {
+  getUserData();
+});
 
 searchForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  getUserData(document.querySelector(".search-input").value.trim());
+  let input = document.querySelector(".search-input").value.trim();
+
+  input = input.replace(/^https?:\/\//, "");
+
+  function isValidIP(str) {
+    const regex =
+      /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+    return regex.test(str);
+  }
+
+  if (isValidIP(input)) {
+    getUserData(input);
+  } else {
+    // Convert domain to IP address
+    fetch(`http://ip-api.com/json/${input}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const ip = data.query;
+        getUserData(ip);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
 });

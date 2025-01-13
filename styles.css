@@ -106,7 +106,7 @@ body::-webkit-scrollbar {
 .data-section {
   z-index: 1;
   position: absolute;
-  top: 19%;
+  top: 9rem;
   background-color: white;
   display: flex;
   text-align: center;
@@ -173,7 +173,7 @@ body::-webkit-scrollbar {
   }
   .data-section {
     flex-direction: row;
-    top: 20%;
+    top: 11rem;
     justify-content: space-between;
     align-items: center;
     text-align: left;

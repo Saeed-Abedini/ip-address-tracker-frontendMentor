@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="IP Address Tracker - Frontend Mentor" />
+    <meta name="keywords" content="IP Address Tracker, Frontend Mentor" />
     <link rel="stylesheet" href="styles.css" />
     <link
       rel="stylesheet"
@@ -17,7 +19,7 @@
       sizes="32x32"
       href="./images/favicon-32x32.png"
     />
-    <title>Frontend Mentor | IP Address Tracker</title>
+    <title>IP Address Tracker</title>
   </head>
   <body>
     <main class="main-container">
@@ -31,7 +33,7 @@
             placeholder="Search for any IP address or domain (e.g., google.com)"
             required
           />
-          <button type="submit" class="submit-btn">
+          <button type="submit" class="submit-btn" aria-label="Submit button">
             <i class="fa-solid fa-spinner" style="display: none"></i>
             <i class="fa-solid fa-angle-right"></i>
           </button>
@@ -44,6 +46,7 @@
           <h2>IP ADDRESS</h2>
           <p id="ipAddress"></p>
         </article>
+
         <hr />
         <article>
           <div class="location-title">
@@ -52,11 +55,13 @@
           <p id="location"></p>
         </article>
         <hr />
+
         <article>
           <h2>TIME ZONE</h2>
           <p id="timezone"></p>
         </article>
         <hr />
+
         <article>
           <h2>ISP</h2>
           <p id="isp"></p>
@@ -68,6 +73,7 @@
         <div id="map"></div>
       </section>
     </main>
+
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
